@@ -23,22 +23,7 @@ class PDF extends Object
 	protected $_lib_path = '';
 	
 	// Drivers
-	protected $_drivers = array(
-		'tcpdf'		=> array(
-			'includes'	=> array(
-				// Relative to lib path
-				'tcpdf/config/lang/eng.php',
-				'tcpdf/tcpdf.php',
-			),
-			'class'		=> 'TCPDF',
-		),
-		'dompdf'	=> array(
-			'includes'	=> array(
-				'dompdf/dompdf_config.inc.php',
-			),
-			'class'		=> 'DOMPDF',
-		),
-	);
+	protected $_drivers = array();
 	
 	// Driver Class
 	protected $_driver_class = '';
