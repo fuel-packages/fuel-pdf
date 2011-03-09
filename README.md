@@ -38,3 +38,54 @@ Now once you've initialised the class you use the libraries exactly as documente
 		// Normally, to add a page in TCPDF you call addPage();
 		$pdf = \Pdf::factory('tcpdf')->init('P', 'mm', 'A4', true, 'UTF-8', false);
 		$pdf->add_page(); // This works.
+
+##Adding Libraries
+Adding libraries is stupidly simple.
+1. Download the PHP5 PDF library.
+2. Drop the folder it's contained in under the lib/ directory of this package.
+3. You'll need to add the following code into the PDF config file (which you should have copied to your APPPATH/config/ directory):
+		// Look for the following code
+		'drivers'			=> array(
+			'tcpdf'		=> array(
+				'includes'	=> array(
+					// Relative to lib path
+					'tcpdf/config/lang/eng.php',
+					'tcpdf/tcpdf.php',
+				),
+				'class'		=> 'TCPDF',
+			),
+			'dompdf'	=> array(
+				'includes'	=> array(
+					'dompdf/dompdf_config.inc.php',
+				),
+				'class'		=> 'DOMPDF',
+			),
+		),
+		
+		// Add a new driver to the array
+		'drivers'			=> array(
+			'tcpdf'		=> array(
+				'includes'	=> array(
+					// Relative to lib path
+					'tcpdf/config/lang/eng.php',
+					'tcpdf/tcpdf.php',
+				),
+				'class'		=> 'TCPDF',
+			),
+			'dompdf'	=> array(
+				'includes'	=> array(
+					'dompdf/dompdf_config.inc.php',
+				),
+				'class'		=> 'DOMPDF',
+			),
+			
+			// New Driver
+			'somenewpdfdriver' => array(
+				'includes'		=> array(
+					'somenewpdfdriver/somenewpdfdriver.php',
+				),
+				'class'			=> 'somenewpdfdriver'
+			),
+		),
+4. Now, simply when you initialise the pdf class:
+		$pdf = \PDF::factory('somenewpdfdriver')->init('option1', 'anotheroption');

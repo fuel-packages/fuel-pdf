@@ -22,24 +22,6 @@ class PDF extends Object
 	// Lib path
 	protected $_lib_path = '';
 	
-	// Drivers
-	protected $_drivers = array(
-		'tcpdf'		=> array(
-			'includes'	=> array(
-				// Relative to lib path
-				'tcpdf/config/lang/eng.php',
-				'tcpdf/tcpdf.php',
-			),
-			'class'		=> 'TCPDF',
-		),
-		'dompdf'	=> array(
-			'includes'	=> array(
-				'dompdf/dompdf_config.inc.php',
-			),
-			'class'		=> 'DOMPDF',
-		),
-	);
-	
 	// Driver Class
 	protected $_driver_class = '';
 	
@@ -56,10 +38,19 @@ class PDF extends Object
 	 */
 	protected function __construct($driver = null)
 	{
+		// Load Config
+		\Config::load('pdf', true);
+		
+		// Default Driver
+		if ($driver == null)
+		{
+			$driver = \Config::get('pdf.default_driver');
+		}
+		
 		// Set the lib path
 		$this->set_lib_path(PKGPATH . 'pdf' . DS . 'lib' . DS);
 		
-		$drivers = $this->get_drivers();
+		$drivers = \Config::get('pdf.drivers');
 		$temp_driver = (isset($drivers[$driver])) ? $drivers[$driver] : false;
 		
 		if ($temp_driver === false)

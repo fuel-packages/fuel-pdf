@@ -11,5 +11,21 @@
  * @link		http://www.tjstechnology.com.au
  */
 return array(
-	'driver'	=> 'dompdf',
+	'default_driver'	=> 'dompdf',
+	'drivers'			=> array(
+		'tcpdf'		=> array(
+			'includes'	=> array(
+				// Relative to lib path
+				'tcpdf/config/lang/eng.php',
+				'tcpdf/tcpdf.php',
+			),
+			'class'		=> 'TCPDF',
+		),
+		'dompdf'	=> array(
+			'includes'	=> array(
+				'dompdf/dompdf_config.inc.php',
+			),
+			'class'		=> 'DOMPDF',
+		),
+	),
 );
