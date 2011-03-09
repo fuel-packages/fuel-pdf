@@ -82,9 +82,6 @@ class PDF extends Object
 		return $this;
 	}
 	
-	// $orientation = 'P', $unit = 'mm', $format = 'A4', $unicode = true, $encoding = 'UTF-8', $diskcache = false
-	
-	
 	/**
 	 * Get Include File
 	 * 
