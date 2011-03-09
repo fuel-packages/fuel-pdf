@@ -41,9 +41,9 @@ Now once you've initialised the class you use the libraries exactly as documente
 
 ##Adding Libraries
 Adding libraries is stupidly simple.
-1. Download the PHP5 PDF library.
-2. Drop the folder it's contained in under the lib/ directory of this package.
-3. You'll need to add the following code into the PDF config file (which you should have copied to your APPPATH/config/ directory):
+* Download the PHP5 PDF library.
+* Drop the folder it's contained in under the lib/ directory of this package.
+* You'll need to add the following code into the PDF config file (which you should have copied to your APPPATH/config/ directory):
 		// Look for the following code
 		'drivers'			=> array(
 			'tcpdf'		=> array(
@@ -87,5 +87,5 @@ Adding libraries is stupidly simple.
 				'class'			=> 'somenewpdfdriver'
 			),
 		),
-4. Now, simply when you initialise the pdf class:
+* Now, simply when you initialise the pdf class:
 		$pdf = \PDF::factory('somenewpdfdriver')->init('option1', 'anotheroption');
