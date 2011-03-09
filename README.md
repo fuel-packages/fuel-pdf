@@ -29,14 +29,14 @@ DomPDF example:
 TCPDF example:
 		// Create an instance of the PDF class
 		// Construct takes following input: $orientation='P', $unit='mm', $format='A4', $unicode=true, $encoding='UTF-8', $diskcache=false
-		$pdf = \Pdf::factory('tcpdf')->init('P', 'mm', 'A4', true, 'UTF-8', false);
+		$pdf = \PDF::factory('tcpdf')->init('P', 'mm', 'A4', true, 'UTF-8', false);
 		// Of course these parameters are optional so we could just call init(). All errors are handled by the libraries themselves.
 
 Now once you've initialised the class you use the libraries exactly as documented. See [TCPDF](http://www.tcpdf.org/) and [DomPDF](http://code.google.com/p/dompdf/) documentation.
 
 * Note: As explained earlier, you can camelcase functions used in the PDF classes so that it feels more Fuel-like (is that a word??).
 		// Normally, to add a page in TCPDF you call addPage();
-		$pdf = \Pdf::factory('tcpdf')->init('P', 'mm', 'A4', true, 'UTF-8', false);
+		$pdf = \PDF::factory('tcpdf')->init('P', 'mm', 'A4', true, 'UTF-8', false);
 		$pdf->add_page(); // This works.
 
 ##Adding Libraries
