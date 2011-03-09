@@ -15,10 +15,8 @@
 
 namespace PDF;
 
-use \TJS\Object as Object;
-
-class PDF extends Object
-{
+class PDF {
+	
 	// Lib path
 	protected $_lib_path = '';
 	
@@ -216,6 +214,93 @@ class PDF extends Object
 			return call_user_func_array(array($pdf, $cameled_method), $arguments);
 		}
 		
-		return parent::__call($method, $arguments);
+		// Generic getter / setter
+		
+		// check if method is not public (protected methods called
+		// outside are routed here)
+		if (method_exists($this, $method))
+		{
+			$reflection = new ReflectionMethod($this, $name);
+			
+			if ( ! $reflection->isPublic())
+			{
+				throw new Exception(sprintf('Call to non-public method %s::%s() caught by %s', $name, get_called_class(), get_called_class()));
+			}
+		}
+		
+		// Method (set / get)
+		$method_type = substr($method, 0, 3);
+		
+		// Variable to set or get
+		$variable = substr($method, 4);
+		$protected_variable = '_' . $variable;
+		
+		// Verbose mode
+		// The 'true' parameter might move depending on if
+		// we're setting something
+		if ($method_type === 'get')
+		{
+			$verbose = (isset($arguments[0])) ? $arguments[0] : false;
+		}
+		else if ($method_type === 'set')
+		{
+			$verbose = (isset($arguments[1])) ? $arguments[1] : false;
+		}
+		
+		// Value
+		if ($method_type === 'set')
+		{
+			$value = (isset($arguments[0])) ? $arguments[0] : false;
+		}
+		
+		// See if it's a get or set
+		if ($method_type === 'get' || $method_type === 'set')
+		{
+			if (isset($this->$variable))
+			{
+				if ($method === 'get')
+				{
+					return $this->$variable;
+				}
+				else if ($method === 'set')
+				{
+					$this->$variable = $value;
+					
+					return $this;
+				}
+			}
+			// else check for that variable with an underscore first
+			// (used in protected variables) - get_test() will first
+			// check for $this->test, and then if non-existent check
+			// for $this->_test
+			else if (isset($this->$protected_variable))
+			{
+				if ($method_type === 'get')
+				{
+					return $this->$protected_variable;
+				}
+				else if ($method_type === 'set')
+				{
+					$this->$protected_variable = $value;
+					
+					return $this;
+				}
+			}
+			else
+			{
+				if ($verbose)
+				{
+					throw new Exception(sprintf('Variable $%s does not exist in class %s', $variable, get_called_class()));
+				}
+				else
+				{
+					return false;
+				}
+			}
+		}
+		else
+		{
+			throw new Exception(sprintf('Call to undefined method %s::%s()', get_called_class(), $name));
+		}
 	}
 }
