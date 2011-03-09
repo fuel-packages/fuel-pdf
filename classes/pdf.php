@@ -203,9 +203,13 @@ class PDF extends Object
 		// Try to assign to TCPDF class
 		$cameled_method = $this->underscore_to_camel($method);
 		
-		// print_r(get_class_methods($this->_driver_instance));
-		
-		if (method_exists($this->_driver_instance, $cameled_method))
+		if (method_exists($this->_driver_instance, $method))
+		{
+			$pdf = $this->get_driver_instance();
+			
+			return call_user_func_array(array($pdf, $method), $arguments);
+		}
+		else if (method_exists($this->_driver_instance, $cameled_method))
 		{
 			$pdf = $this->get_driver_instance();
 			
