@@ -11,10 +11,10 @@
  * @link		http://www.tjstechnology.com.au
  */
 
-Autoloader::add_core_namespace('PDF');
+Autoloader::add_core_namespace('Pdf');
 
 Autoloader::add_classes(array(
-	'PDF\\PDF'						=> __DIR__ . '/classes/pdf.php',
+	'Pdf\\Pdf'						=> __DIR__ . '/classes/pdf.php',
 ));
 
 

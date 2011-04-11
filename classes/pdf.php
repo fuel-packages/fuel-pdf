@@ -13,9 +13,9 @@
  * @link		http://www.tjstechnology.com.au
  */
 
-namespace PDF;
+namespace Pdf;
 
-class PDF {
+class Pdf {
 	
 	// Lib path
 	protected $_lib_path = '';
