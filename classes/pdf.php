@@ -147,34 +147,6 @@ class Pdf {
 	}
 	
 	/**
-	 * Get TCPDF
-	 * 
-	 * Gets the TCPDF object
-	 *
-	 * @access	public
-	 * @return	\TCPDF
-	 */
-	public function get_tcpdf()
-	{
-		return ( ! empty($this->_tcpdf)) ? $this->_tcpdf : false;
-	}
-	
-	/**
-	 * Get TCPDF
-	 * 
-	 * Gets the TCPDF object
-	 *
-	 * @access	public
-	 * @return	PDF\PDF
-	 */
-	public function set_tcpdf(\TCPDF $pdf)
-	{
-		$this->_tcpdf = $pdf;
-		
-		return $this;
-	}
-	
-	/**
 	 * Call
 	 * 
 	 * Magic method to catch all calls
@@ -198,20 +170,22 @@ class Pdf {
 			return $this;
 		}
 		
-		// Try to assign to TCPDF class
+		// Get cameled method
 		$cameled_method = $this->underscore_to_camel($method);
 		
 		if (method_exists($this->_driver_instance, $method))
 		{
 			$pdf = $this->get_driver_instance();
 			
-			return call_user_func_array(array($pdf, $method), $arguments);
+			$return = call_user_func_array(array($pdf, $method), $arguments);
+			return ($return) ? $return : $this;
 		}
 		else if (method_exists($this->_driver_instance, $cameled_method))
 		{
 			$pdf = $this->get_driver_instance();
 			
-			return call_user_func_array(array($pdf, $cameled_method), $arguments);
+			$return = call_user_func_array(array($pdf, $cameled_method), $arguments);
+			return ($return) ? $return : $this;
 		}
 		
 		// Generic getter / setter
@@ -224,7 +198,7 @@ class Pdf {
 			
 			if ( ! $reflection->isPublic())
 			{
-				throw new Exception(sprintf('Call to non-public method %s::%s() caught by %s', $name, get_called_class(), get_called_class()));
+				throw new \Exception(sprintf('Call to non-public method %s::%s() caught by %s', $name, get_called_class(), get_called_class()));
 			}
 		}
 		
@@ -290,7 +264,7 @@ class Pdf {
 			{
 				if ($verbose)
 				{
-					throw new Exception(sprintf('Variable $%s does not exist in class %s', $variable, get_called_class()));
+					throw new \Exception(sprintf('Variable $%s does not exist in class %s', $variable, get_called_class()));
 				}
 				else
 				{
@@ -300,7 +274,7 @@ class Pdf {
 		}
 		else
 		{
-			throw new Exception(sprintf('Call to undefined method %s::%s()', get_called_class(), $name));
+			throw new \Exception(sprintf('Call to undefined method %s::%s()', get_called_class(), $name));
 		}
 	}
 }
